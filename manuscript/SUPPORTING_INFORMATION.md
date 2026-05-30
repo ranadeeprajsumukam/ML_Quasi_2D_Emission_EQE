@@ -27,6 +27,7 @@ If you are tracing a number back to its origin, use **Table S11** for a one-page
 | S7 | EQE models and fabrication variables |
 | S8 | Hyperparameters, configs, and reproduction |
 | S9 | Bibliography with full paper titles |
+| S10 | SHAP–mechanism table (SVR, 13 features) |
 
 ---
 
@@ -277,7 +278,7 @@ Hyperparameter tuning matters: compare Table S8 with Table S9.
 | Fig. S1 | λ histogram | Data export |
 | Figs. S2–S8 | Wavelength parity, RFECV, SHAP | `emission_wavelength_nm/*` |
 
-**SHAP (brief).** SHAP values partition each prediction into additive feature contributions (see main text ref. [12]). Tree SHAP is exact for tree ensembles; Kernel SHAP approximates SVR/GPR with a small background sample from the training matrix.
+**SHAP (brief).** SHAP values partition each prediction as *f*(**x**) = *φ*<sub>0</sub> + Σ*φ*<sub>*j*</sub> (main text Table 2 and ref. [12]). The primary emission model uses **Kernel SHAP** on tuned SVR–RBF; tree models in auxiliary runs use Tree SHAP.
 
 ---
 
@@ -342,6 +343,34 @@ conda activate ml-quasit
 pip install -e .
 python scripts/run_experiment.py --config configs/emission_photon_energy/add_hydrogens_tuned_select_from_model.yaml
 ```
+
+---
+
+## S10. SHAP Analysis — Tuned SVR–RBF (Thirteen Features, AddHs)
+
+This table is the Supporting Information companion to **main-text Table 2**. It was generated from the canonical thirteen-descriptor list (SI Table S5) after the same correlation filter (173 columns dropped on the training fold), hyperparameter-tuned SVR–RBF (*C* = 50, *γ* = 0.1, *ε* = 0.01), and Kernel SHAP (50 background samples, 250 coalitions per record, *N* = 283). Test-set performance at these settings: *R*<sup>2</sup> = 0.953, RMSE = 0.074 eV, MAE = 0.048 eV (*n*<sub>test</sub> = 57). CSV export: `manuscript/shap_svr13_summary.csv`.
+
+### Table S10. Mean absolute SHAP and feature–SHAP correlation
+
+| Rank | Descriptor | ⟨\|SHAP\|⟩ (eV) | Share (%) | Mean SHAP (eV) | corr(*x*, SHAP) | Mechanism (summary) |
+|------|------------|----------------|-----------|----------------|-----------------|---------------------|
+| 1 | PbBr2 | 0.0743 | 21.4 | −0.0064 | +0.952 | Inorganic Br; wider-gap wells |
+| 2 | BR_PRIMARY_ORGANIC_HALIDE | 0.0592 | 17.1 | +0.0041 | +0.961 | Br on primary spacer |
+| 3 | FAI_TO_Pb | 0.0310 | 8.9 | +0.0029 | −0.978 | FA iodide; iodide-rich, redder |
+| 4 | FABr_TO_Pb | 0.0276 | 8.0 | −0.0057 | −0.913 | FA bromide ratio |
+| 5 | CsI_TO_Pb | 0.0272 | 7.8 | +0.0035 | −0.873 | Cs iodide supply |
+| 6 | PbCl2 | 0.0267 | 7.7 | +0.0061 | +0.969 | Inorganic Cl; high-gap bias |
+| 7 | Pri_VSA_EState4 | 0.0236 | 6.8 | +0.0032 | −0.792 | Primary spacer polarity/VSA |
+| 8 | CsBr_TO_Pb | 0.0227 | 6.5 | +0.0003 | −0.325 | Cs bromide ratio |
+| 9 | SOLVENT_DMF | 0.0170 | 4.9 | −0.0037 | −0.261 | DMF vs other solvents |
+| 10 | SPACER_TO_PB_RATIO | 0.0128 | 3.7 | +0.0011 | +0.139 | Nominal *n* / confinement lever |
+| 11 | Sec_HallKierAlpha | 0.0113 | 3.3 | +0.0011 | −0.340 | Secondary spacer topology |
+| 12 | CL_PRIMARY_ORGANIC_HALIDE | 0.0079 | 2.3 | −0.0007 | +0.970 | Cl on primary spacer |
+| 13 | Sec_PEOE_VSA6 | 0.0060 | 1.7 | −0.0010 | −0.504 | Secondary spacer charge/VSA |
+
+**Reading the columns.** Positive corr(*x*, SHAP) means that, across the corpus, larger feature values associate with more positive SHAP contributions and therefore **higher** predicted *E*<sub>ph</sub> (bluer). Binary flags are interpreted as 0/1. SHAP base value *φ*<sub>0</sub> = **2.3269 eV**.
+
+**Reproduction (Python).** After `pip install -e .`, fix the thirteen feature names from Table S5, run correlation filtering and SVR tuning as in `add_hydrogens_tuned_select_from_model.yaml`, then apply `shap.KernelExplainer(svr.predict, background)` on standardized `X_train`/`X_test`. The manuscript CSV was produced with this workflow on the repository data freeze.
 
 ---
 

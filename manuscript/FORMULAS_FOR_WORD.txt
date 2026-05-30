@@ -1,0 +1,156 @@
+FORMULAS FOR MICROSOFT WORD
+============================
+Copy any block below into Word. For nicer layout: place cursor where you want the equation,
+press Alt + = (opens Equation Editor), paste the "Word equation line", then press Space
+(or Enter) so Word formats it.
+
+----------------------------------------------------------------------
+1. PHOTON ENERGY AND WAVELENGTH
+----------------------------------------------------------------------
+
+Plain text (readable in body text):
+  E_ph (eV) = h·c / λ  ≈  1240 / λ(nm)
+
+Word equation line (Alt+=, then paste):
+  E_ph=(1240)/λ
+
+Alternative with units:
+  E_ph (eV) = (h c) / λ ,  with  h c ≈ 1240 eV·nm  when λ is in nm
+
+Symbols:
+  E_ph  = photon energy (electronvolts)
+  λ     = peak wavelength (nanometres)
+  h     = Planck constant
+  c     = speed of light
+
+----------------------------------------------------------------------
+2. WAVELENGTH UNCERTAINTY FROM ENERGY ERROR (green example)
+----------------------------------------------------------------------
+
+Plain text:
+  |Δλ| ≈ (1240 / E²) · |ΔE|
+
+Example at E ≈ 2.3 eV and |ΔE| = 0.074 eV:
+  |Δλ| ≈ (1240 / 2.3²) × 0.074 ≈ 15–20 nm
+
+Word equation line:
+  |Δλ|≈(1240/E^2)|ΔE|
+
+----------------------------------------------------------------------
+3. COEFFICIENT OF DETERMINATION (R-squared)
+----------------------------------------------------------------------
+
+Plain text:
+  R² = 1 − [ Σᵢ (E_ph,i − Êᵢ)² ] / [ Σᵢ (E_ph,i − Ē)² ]
+
+Word equation line:
+  R^2=1-(Σ_i (E_ph,i-ĤE_i)^2)/(Σ_i (E_ph,i-Ē)^2)
+
+Symbols:
+  E_ph,i  = measured photon energy for sample i
+  Êᵢ      = predicted photon energy for sample i
+  Ē       = mean of measured photon energies
+
+----------------------------------------------------------------------
+4. ROOT MEAN SQUARE ERROR (RMSE)
+----------------------------------------------------------------------
+
+Plain text:
+  RMSE = √[ (1/n) · Σᵢ (E_ph,i − Êᵢ)² ]
+
+Word equation line:
+  RMSE=√((1/n) Σ_i (E_ph,i-ĤE_i)^2 )
+
+----------------------------------------------------------------------
+5. MEAN ABSOLUTE ERROR (MAE)
+----------------------------------------------------------------------
+
+Plain text:
+  MAE = (1/n) · Σᵢ |E_ph,i − Êᵢ|
+
+Word equation line:
+  MAE=(1/n) Σ_i |E_ph,i-ĤE_i|
+
+----------------------------------------------------------------------
+6. PEARSON CORRELATION (feature pruning)
+----------------------------------------------------------------------
+
+Plain text:
+  Remove feature j if |r_jk| > 0.90 for any other feature k ≠ j
+
+Word equation line:
+  |r_jk|>0.90
+
+----------------------------------------------------------------------
+7. SUPPORT VECTOR REGRESSION — RBF KERNEL
+----------------------------------------------------------------------
+
+Plain text:
+  f(x) = Σᵢ αᵢ · exp( −γ · ‖x − xᵢ‖² ) + b
+
+Word equation line:
+  f(x)=Σ_(i=1)^(N_sv) α_i exp(-γ‖x-x_i‖^2)+b
+
+Symbols:
+  x     = feature vector (standardized descriptors)
+  xᵢ    = support vector
+  αᵢ    = dual coefficients
+  γ     = kernel width (tuned: 0.1 in best model)
+  b     = bias
+  N_sv  = number of support vectors
+
+Best tuned hyperparameters (13-feature SVR):
+  C = 50,  γ = 0.1,  ε = 0.01
+
+----------------------------------------------------------------------
+8. SHAP ADDITIVE DECOMPOSITION
+----------------------------------------------------------------------
+
+Plain text:
+  f(x) = φ₀ + φ₁(x) + φ₂(x) + … + φₚ(x)  =  φ₀ + Σⱼ φⱼ(x)
+
+Word equation line:
+  f(x)=φ_0+Σ_(j=1)^p φ_j (x)
+
+Symbols:
+  φ₀    = baseline prediction (background expectation); value ≈ 2.33 eV
+  φⱼ    = Shapley contribution of descriptor j
+  p     = 13 features
+
+Interpretation:
+  φⱼ > 0  →  feature j pushes prediction to HIGHER E_ph (bluer)
+  φⱼ < 0  →  feature j pushes prediction to LOWER E_ph (redder)
+
+Mean importance of feature j (used in Table 2):
+  ⟨|φⱼ|⟩ = average of |φⱼ| over all 283 literature records
+
+----------------------------------------------------------------------
+9. SAMPLE-TO-FEATURE RATIO
+----------------------------------------------------------------------
+
+Plain text:
+  N / p  =  226 / 13  ≈  17.4   (SelectFromModel set)
+  N / p  =  226 / 31  ≈  7.3    (RFECV set)
+
+  N = number of training records
+  p = number of descriptors
+
+----------------------------------------------------------------------
+10. QUASI-2D STOICHIOMETRY (text only, no equation number needed)
+----------------------------------------------------------------------
+
+Plain text:
+  Ruddlesden–Popper formula:  L₂Aₙ₋₁PbₙX₃ₙ₊₁
+
+----------------------------------------------------------------------
+QUICK TIP FOR WORD
+----------------------------------------------------------------------
+1. Select plain-text formula → Insert → Equation → "Professional" format,
+   or use Alt+= and retype using _ for subscript (E_ph) and ^ for superscript (R^2).
+
+2. Greek letters in Word equations: type \phi → φ,  \gamma → γ,  \lambda → λ,
+   \Sigma → Σ,  \alpha → α.
+
+3. Fractions: type (a)/(b) or use fraction button after Alt+=.
+
+End of file.
