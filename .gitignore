@@ -17,8 +17,8 @@ outputs/
 catboost_info/
 results_table.html
 
-# Trained model bundles (large binary files)
-models/**/*.joblib
+# Trained model bundles — committed since they are small (~1 MB)
+# models/**/*.joblib   ← intentionally tracked
 !models/**/*.json
 
 # Data (keep README; do not commit large proprietary spreadsheets by default)
