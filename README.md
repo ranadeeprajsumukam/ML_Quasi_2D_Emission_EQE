@@ -83,6 +83,48 @@ python scripts/run_experiment.py --all
 ```
 
 Results are saved under `outputs/<experiment_name>/`.
+Trained model bundles are automatically saved to `models/<experiment_name>/`.
+
+## Predict emission energy
+
+After training, use the saved model to predict emission photon energy:
+
+### Command-line (single prediction)
+
+```bash
+python scripts/predict.py \
+    --primary-spacer "2-phenylethan-1-amine" \
+    --solvent DMSO \
+    --PbBr2 1.0 --CsBr 1.0
+```
+
+### Interactive mode
+
+```bash
+python scripts/predict.py
+# Follow the guided prompts
+```
+
+### Batch prediction from CSV
+
+```bash
+python scripts/predict.py --batch inputs.csv --output predictions.csv
+```
+
+### Web application
+
+```bash
+streamlit run app/streamlit_app.py
+```
+
+Open `http://localhost:8501` in your browser.
+
+### Docker
+
+```bash
+docker build -t perovskite-predictor .
+docker run -p 8501:8501 perovskite-predictor
+```
 
 ## Notebooks
 
@@ -100,3 +142,10 @@ To refresh from your local `Documents/rana` folders:
 ```bash
 python scripts/import_notebooks_from_rana.py
 ```
+
+## Tests
+
+```bash
+python -m pytest tests/ -v
+```
+

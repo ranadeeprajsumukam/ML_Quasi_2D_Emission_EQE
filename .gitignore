@@ -17,6 +17,10 @@ outputs/
 catboost_info/
 results_table.html
 
+# Trained model bundles (large binary files)
+models/**/*.joblib
+!models/**/*.json
+
 # Data (keep README; do not commit large proprietary spreadsheets by default)
 data/*.xlsx
 data/*.xls

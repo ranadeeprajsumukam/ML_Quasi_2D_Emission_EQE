@@ -40,7 +40,7 @@ def evaluate_models(
     unit = _metric_label(config)
     results = []
     for name, model in models.items():
-        X_te = X_test_map.get(name, X_test_map["default"])
+        X_te = X_test_map[name] if name in X_test_map else X_test_map.get("default", X_te)
         y_pred = model.predict(X_te)
         results.append(
             {

@@ -1,0 +1,105 @@
+{
+  "config_name": "emission_photon_energy_add_hydrogens_tuned_select_from_model",
+  "task": "emission_ev",
+  "target_column": "PHOTON_ENERGY_EV",
+  "add_hydrogens": true,
+  "feature_selection": "select_from_model",
+  "hyperparameter_tuning": true,
+  "correlation_threshold": 0.9,
+  "saved_at": "20260926T183609Z",
+  "n_features": 11,
+  "n_models": 5,
+  "best_model": "SVR (RBF)",
+  "selected_features": [
+    "BR_PRIMARY_ORGANIC_HALIDE",
+    "SPACER_TO_PB_RATIO",
+    "PbCl2",
+    "PbBr2",
+    "CsBr_TO_Pb",
+    "CsI_TO_Pb",
+    "FABr_TO_Pb",
+    "FAI_TO_Pb",
+    "Sec_BCUT2D_MWHI",
+    "Sec_HallKierAlpha",
+    "Sec_PEOE_VSA6"
+  ],
+  "solvent_categories": [
+    "DMF",
+    "DMF:DMSO",
+    "DMSO",
+    "NMP"
+  ],
+  "known_primary_spacers": [
+    "1-(naphthalen-1-yl)ethan-1-amine",
+    "1-phenylethan-1-amine",
+    "2-(3-fluorophenyl)ethan-1-amine",
+    "2-(4-fluorophenyl)ethan-1-amine",
+    "2-(thiophen-2-yl)ethan-1-amine",
+    "2-[2-(2-aminoethoxy)ethoxy]ethan-1-amine",
+    "2-[5-(2,2'-dimethyl-[1,1'-biphenyl]-4-yl)thiophen-2-yl]ethan-1-amine",
+    "2-[5-(3',5'-dimethyl-[1,1'-biphenyl]-4-yl)thiophen-2-yl]ethan-1-amine",
+    "2-phenoxyethan-1-amine",
+    "2-phenylethan-1-amine",
+    "3,3-diphenylpropan-1-amine",
+    "4-phenylbutan-1-amine",
+    "N-(2-bromoethyl)propane-1,3-diamine",
+    "[1,1':3',1'':3'',1'''-quaterphenyl]-4-ylmethanamine",
+    "benzene-1,4-dimethanamine",
+    "butan-1-amine",
+    "ethanamine",
+    "naphthalen-1-ylmethanamine",
+    "pentan-1-amine",
+    "pentane-1,5-diamine",
+    "propan-1-amine",
+    "propane-1,3-diamine"
+  ],
+  "known_secondary_spacers": [
+    "1-(naphthalen-1-yl)ethan-1-amine",
+    "2-(2-methoxyphenyl)ethan-1-amine",
+    "2-(3-methoxyphenyl)ethan-1-amine",
+    "2-(4-methoxyphenyl)ethan-1-amine",
+    "2-phenylethan-1-amine",
+    "4-phenylbutan-2-amine",
+    "N-(2-bromoethyl)propane-1,3-diamine",
+    "adamantan-1-amine",
+    "butan-1-amine",
+    "ethanamine",
+    "ethanimidamide",
+    "guanidine",
+    "pentane-1,5-diamine",
+    "propan-1-amine",
+    "propan-2-amine"
+  ],
+  "benchmark": [
+    {
+      "Model": "SVR (RBF)",
+      "R2 Score": 0.9094164038160878,
+      "RMSE (eV)": 0.10288642986882113,
+      "MAE (eV)": 0.056799013979691435
+    },
+    {
+      "Model": "CatBoost",
+      "R2 Score": 0.9074469398269565,
+      "RMSE (eV)": 0.10399889140273333,
+      "MAE (eV)": 0.062351898326173404
+    },
+    {
+      "Model": "Gaussian Process",
+      "R2 Score": 0.907373799948204,
+      "RMSE (eV)": 0.10403997575012275,
+      "MAE (eV)": 0.06262686922213814
+    },
+    {
+      "Model": "XGBoost",
+      "R2 Score": 0.7808411588655425,
+      "RMSE (eV)": 0.16003420476502586,
+      "MAE (eV)": 0.075969950107106
+    },
+    {
+      "Model": "Random Forest",
+      "R2 Score": 0.7563003515513289,
+      "RMSE (eV)": 0.16875660112338944,
+      "MAE (eV)": 0.08592638456630192
+    }
+  ]
+}

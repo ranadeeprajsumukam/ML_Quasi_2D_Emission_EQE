@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+.git/
+.gitignore
+*.egg-info/
+notebooks/
+outputs/
+catboost_info/
+*.docx
+.venv/
+.env
+*.log
