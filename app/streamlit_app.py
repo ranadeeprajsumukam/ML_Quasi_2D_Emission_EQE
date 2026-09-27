@@ -379,40 +379,42 @@ def load_predictor():
 
 # ── University branding ───────────────────────────────────────────────────────
 def _render_sidebar_branding():
-    """Render UoH logo + School of Chemistry at the top of the sidebar."""
-    import base64
-    logo_path = REPO_ROOT / "app" / "assets" / "uoh_logo.png"
-    logo_b64 = ""
-    if logo_path.exists():
-        with open(logo_path, "rb") as f:
-            logo_b64 = base64.b64encode(f.read()).decode()
-
+    """Render SPRL / School of Chemistry / University of Hyderabad at the top of the sidebar."""
     with st.sidebar:
-        if logo_b64:
-            st.markdown(
-                f"""<div style="text-align:center;padding:18px 8px 10px 8px;
-                border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:14px">
-                <img src="data:image/png;base64,{logo_b64}"
-                     style="max-width:160px;width:100%;filter:brightness(1.05)"/>
-                <div style="margin-top:10px;font-size:0.82rem;font-weight:600;
-                color:#c5c9e0;letter-spacing:0.8px;text-transform:uppercase">
-                School of Chemistry</div>
-                <div style="font-size:0.72rem;color:#8b93b8;margin-top:2px">
-                University of Hyderabad</div>
-                </div>""",
-                unsafe_allow_html=True,
-            )
-        else:
-            st.markdown(
-                """<div style="text-align:center;padding:16px 8px 12px 8px;
-                border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:14px">
-                <div style="font-size:1rem;font-weight:700;color:#7c8ef7">
-                University of Hyderabad</div>
-                <div style="font-size:0.82rem;font-weight:600;color:#c5c9e0;
-                letter-spacing:0.8px;margin-top:4px">School of Chemistry</div>
-                </div>""",
-                unsafe_allow_html=True,
-            )
+        st.markdown(
+            """
+            <div style="
+                text-align:center;
+                padding:20px 12px 16px 12px;
+                border-bottom:1px solid rgba(255,255,255,0.10);
+                margin-bottom:16px;
+            ">
+                <div style="
+                    font-size:1.55rem;
+                    font-weight:800;
+                    letter-spacing:3px;
+                    background:linear-gradient(90deg,#7c8ef7,#56cfb8);
+                    -webkit-background-clip:text;
+                    -webkit-text-fill-color:transparent;
+                    margin-bottom:6px;
+                ">SPRL</div>
+                <div style="
+                    font-size:0.80rem;
+                    font-weight:600;
+                    color:#c5c9e0;
+                    letter-spacing:0.8px;
+                    text-transform:uppercase;
+                    margin-bottom:3px;
+                ">School of Chemistry</div>
+                <div style="
+                    font-size:0.72rem;
+                    color:#8b93b8;
+                    font-weight:400;
+                ">University of Hyderabad</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
 
 # ── SIDEBAR ───────────────────────────────────────────────────────────────────
@@ -470,7 +472,7 @@ def render_single_tab(predictor):
     # ── LEFT: inputs ──────────────────────────────────────────────────────────
     with col_left:
         # ── Organic Spacer ────────────────────────────────────────────────────
-        section_header("🧬", "Organic Spacer")
+        section_header("🔬", "Organic Spacer")
 
         field_label("Input method")
         spacer_mode = st.radio(
@@ -593,7 +595,7 @@ def render_single_tab(predictor):
             st.markdown("</div>", unsafe_allow_html=True)
 
         # ── Processing ────────────────────────────────────────────────────────
-        section_header("🧴", "Processing Conditions")
+        section_header("⚙️", "Processing Conditions")
 
         col_sol, col_ratio = st.columns([1, 1])
         with col_sol:
@@ -726,7 +728,7 @@ def render_single_tab(predictor):
                     result = predictor.predict(inp, return_features=False)
 
                 # ── Main metrics ──────────────────────────────────────────────
-                section_header("⚡", "Prediction Results")
+                section_header("📊", "Prediction Results")
 
                 m1, m2 = st.columns(2)
                 with m1:
@@ -754,7 +756,7 @@ def render_single_tab(predictor):
                 )
 
                 # ── All model predictions ─────────────────────────────────────
-                section_header("🤖", "All Model Predictions")
+                section_header("📈", "All Model Predictions")
                 preds_df = pd.DataFrame([
                     {
                         "Model": name,
@@ -769,7 +771,7 @@ def render_single_tab(predictor):
                 st.dataframe(preds_df, width='stretch', hide_index=True)
 
                 # ── Molecule structure(s) ─────────────────────────────────────
-                section_header("🧬", "Spacer Molecule Structure")
+                section_header("⬡", "Spacer Molecule Structure")
 
                 from ml_quasit.inference_pipeline import _resolve_smiles
                 pri_smiles = _resolve_smiles(primary_spacer)
@@ -959,7 +961,7 @@ def main():
         🔬 Quasi-2D Perovskite Emission Predictor
         </div>
         <div style="color:#8b93b8;font-size:0.9rem">
-        ML-powered prediction of emission photon energy &amp; wavelength for blue LED perovskites
+        ML-powered prediction of emission photon energy &amp; wavelength of Quasi-2D Metal Halide Perovskites
         </div></div>""",
         unsafe_allow_html=True,
     )
