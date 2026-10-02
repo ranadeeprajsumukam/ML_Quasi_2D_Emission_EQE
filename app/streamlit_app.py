@@ -364,8 +364,10 @@ def _render_molecule_b64(smiles: str) -> str | None:
         buf = BytesIO()
         img.save(buf, format="PNG")
         return base64.b64encode(buf.getvalue()).decode()
-    except Exception:
-        return None
+    except Exception as e:
+        import traceback
+        return f"ERROR:{type(e).__name__}:{str(e)}\n{traceback.format_exc()}"
+
 
 
 # ── Model loading ─────────────────────────────────────────────────────────────
@@ -787,7 +789,9 @@ def render_single_tab(predictor):
                     with mol_cols[0]:
                         if pri_smiles:
                             b64 = _render_molecule_b64(pri_smiles)
-                            if b64:
+                            if b64 and b64.startswith("ERROR:"):
+                                st.error(f"Image Error: {b64}")
+                            elif b64:
                                 st.markdown(
                                     f'<div style="background:#fff;border-radius:12px;'
                                     f'padding:10px;text-align:center;'
@@ -809,7 +813,9 @@ def render_single_tab(predictor):
                     if sec_smiles and len(mol_cols) > 1:
                         with mol_cols[1]:
                             b64_sec = _render_molecule_b64(sec_smiles)
-                            if b64_sec:
+                            if b64_sec and b64_sec.startswith("ERROR:"):
+                                st.error(f"Image Error: {b64_sec}")
+                            elif b64_sec:
                                 st.markdown(
                                     f'<div style="background:#fff;border-radius:12px;'
                                     f'padding:10px;text-align:center;'
