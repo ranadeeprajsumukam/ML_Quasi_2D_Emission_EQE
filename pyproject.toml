@@ -7,6 +7,7 @@ name = "ml-quasit-2d-perovskites"
 version = "0.2.0"
 description = "ML models for quasi-2D perovskite blue LED emission and EQE prediction"
 readme = "README.md"
+license = {text = "MIT"}
 requires-python = ">=3.10"
 dependencies = [
   "pandas>=2.0",

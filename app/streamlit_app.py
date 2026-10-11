@@ -465,6 +465,12 @@ def render_sidebar(predictor):
             '</div>',
             unsafe_allow_html=True,
         )
+        st.markdown(
+            '<div style="color:#6b7280;font-size:0.72rem;margin-top:10px;border-top:1px dashed rgba(255,255,255,0.08);padding-top:8px">'
+            '⚖️ <i>Academic research tool · Released under MIT License</i>'
+            '</div>',
+            unsafe_allow_html=True,
+        )
 
 
 # ── SINGLE PREDICTION TAB ─────────────────────────────────────────────────────
