@@ -28,6 +28,12 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 import pandas as pd
 
 from ml_quasit.inference_pipeline import (
@@ -81,14 +87,14 @@ def _interactive_predict(predictor: EmissionPredictor):
     _print_header()
 
     # Show known spacers
-    print("\n📋 Known primary spacers (from training data):")
+    print("\nKnown primary spacers (from training data):")
     for i, s in enumerate(predictor.known_primary_spacers, 1):
         print(f"   {i:2d}. {s}")
 
-    print(f"\n📋 Available solvents: {', '.join(KNOWN_SOLVENTS)}")
+    print(f"\nAvailable solvents: {', '.join(KNOWN_SOLVENTS)}")
 
     # Primary spacer
-    print("\n── Primary Spacer ──")
+    print("\n-- Primary Spacer --")
     spacer_input = input(
         "Enter IUPAC name, SMILES, or number from list above: "
     ).strip()
@@ -120,7 +126,7 @@ def _interactive_predict(predictor: EmissionPredictor):
     secondary_fraction = 0.0
 
     if is_mixed == "y":
-        print("\n📋 Known secondary spacers:")
+        print("\nKnown secondary spacers:")
         for i, s in enumerate(predictor.known_secondary_spacers, 1):
             print(f"   {i:2d}. {s}")
         sec_input = input(
@@ -190,7 +196,7 @@ def _interactive_predict(predictor: EmissionPredictor):
         **precursors,
     )
 
-    print("\n⏳ Computing molecular descriptors and predicting...")
+    print("\nComputing molecular descriptors and predicting...")
     result = predictor.predict(inp, return_features=False)
     _print_result(result)
 
@@ -200,9 +206,9 @@ def _print_result(result: PredictionResult):
     print("\n" + "=" * 60)
     print("  PREDICTION RESULTS")
     print("=" * 60)
-    print(f"\n  🔬 Model used:       {result.model_name}")
-    print(f"  ⚡ Photon Energy:    {result.predicted_ev:.4f} eV")
-    print(f"  🌈 Wavelength:       {result.predicted_nm:.1f} nm")
+    print(f"\n  Model used:       {result.model_name}")
+    print(f"  Photon Energy:    {result.predicted_ev:.4f} eV")
+    print(f"  Wavelength:       {result.predicted_nm:.1f} nm")
 
     # Color indication
     nm = result.predicted_nm
@@ -222,7 +228,7 @@ def _print_result(result: PredictionResult):
         color = "Orange"
     else:
         color = "Red/NIR"
-    print(f"  🎨 Color region:     {color}")
+    print(f"  Color region:     {color}")
 
     print(f"\n  {result.confidence_note}")
 
@@ -290,7 +296,7 @@ def _batch_predict(
 
     out = output_path or csv_path.replace(".csv", "_predictions.csv")
     results_df.to_csv(out, index=False)
-    print(f"\n✓ Predictions saved to: {out}")
+    print(f"\nPredictions saved to: {out}")
     print(results_df[["primary_spacer", "solvent", "predicted_ev", "predicted_nm"]].to_string())
 
 
@@ -309,7 +315,7 @@ def _list_models():
                 with open(latest) as f:
                     meta = json.load(f)
                 found = True
-                print(f"\n📦 {sub.name}")
+                print(f"\n[Model Bundle] {sub.name}")
                 print(f"   Best model: {meta.get('best_model', 'N/A')}")
                 print(f"   Features:   {meta.get('n_features', 'N/A')}")
                 print(f"   Saved at:   {meta.get('saved_at', 'N/A')}")
@@ -318,7 +324,7 @@ def _list_models():
                     for row in meta["benchmark"][:3]:
                         print(
                             f"     {row['Model']:20s} "
-                            f"R²={row.get('R2 Score', 0):.4f}"
+                            f"R2={row.get('R2 Score', 0):.4f}"
                         )
     if not found:
         print("No trained model bundles found.")
