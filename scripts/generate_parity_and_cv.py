@@ -1,5 +1,5 @@
 """
-Publication-quality analysis for JACS review response.
+Publication-quality analysis and figure generation for the manuscript.
 
 Generates:
   1. Parity plot (predicted vs. experimental Eph) — main text figure

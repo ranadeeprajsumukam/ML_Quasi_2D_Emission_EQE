@@ -12,10 +12,11 @@ env/
 # Jupyter
 .ipynb_checkpoints/
 
-# ML outputs
+# ML outputs & testing
 outputs/
 catboost_info/
 results_table.html
+.pytest_cache/
 
 # Trained model bundles — committed since they are small (~1 MB)
 # models/**/*.joblib   ← intentionally tracked

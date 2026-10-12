@@ -1,10 +1,9 @@
 """
-Retrain using the exact 13-feature set from the original notebook
-(Final_RFECV_eV_clean_H_add_opty_woRFECV.ipynb).
+Retrain using the champion 13-feature set (SelectFromModel + AddHs)
+for quasi-2D perovskite emission energy prediction.
 
-The 13 features were determined by running SelectFromModel once in the
-notebook. We lock them here to guarantee full reproducibility and
-consistency between the paper metrics and the deployed web app.
+Locks the champion 13-feature subset to guarantee full reproducibility
+and exact consistency with manuscript reported metrics and the deployed web application.
 
 Run from repo root:
     python scripts/retrain_13features.py
@@ -36,8 +35,7 @@ from ml_quasit.model_serialization import ModelBundle, save_model_bundle
 CONFIG_PATH = REPO_ROOT / "configs" / "emission_photon_energy" / \
               "add_hydrogens_tuned_select_from_model.yaml"
 
-# The exact 13 features confirmed from the original notebook
-# (Final_RFECV_eV_clean_H_add_opty_woRFECV.ipynb, cell 9 output)
+# The exact 13 features from the champion SelectFromModel workflow
 NOTEBOOK_13_FEATURES = [
     "CL_PRIMARY_ORGANIC_HALIDE",
     "BR_PRIMARY_ORGANIC_HALIDE",
